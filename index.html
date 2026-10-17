@@ -3,29 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
     <title>Shortly | More Than Just Shorter Links</title>
 </head>
 <body>
-    <nav id = "nav-one">
-       <ul>
-        <li>
-            <a href="/">
-            <img src="./img/logo.svg" alt="Logo-Home" width="auto" height=20>
-            </a>
-        </li>
-        <br>
-        <br>
-        <li id="Features"><a href="#">Features</a></li>
-        <li id="Pricing"><a href="#">Pricing</a></li>
-        <li id="Resources"><a href="#">Resources</a></li>
-       </ul>
-       <ul>
+<nav id="nav-one">
+    <a href="/" class="logo">
+        <img src="./img/logo.svg" alt="Shortly home">
+    </a>
+
+    <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div id="nav-menu" class="nav-menu">
+        <ul>
+            <li id="Features"><a href="#">Features</a></li>
+            <li id="Pricing"><a href="#">Pricing</a></li>
+            <li id="Resources"><a href="#">Resources</a></li>
+        </ul>
+        <ul>
             <li id="Login"><a href="#">Login</a></li>
             <li id="SignUp"><button type="button">Sign Up</button></li>
         </ul>
-    </nav>
+    </div>
+</nav>
 <fieldset>
     <div class="hero-section">
         <div class="hero-text">

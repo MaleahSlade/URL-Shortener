@@ -1,16 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght,MONO@0,300..800,1;1,300..800,1&display=swap');
-
 body {
     font-family: "Google Sans Code", monospace;
-    }
+}
 
+button {
+    font-family: inherit;
+}
 
 h1 {
     font-size: 32px;
-}
-
-p {
-    font: size 18px;
 }
 
 a {
@@ -23,11 +20,19 @@ a:focus-visible {
     color: #808080;
 }
 
+/* ---------- Nav (desktop) ---------- */
 #nav-one {
     display: flex;
-    justify-content: space-between; /* first ul left, second ul right */
     align-items: center;
+    gap: 2rem;
     padding: 1rem 2rem;
+}
+
+.nav-menu {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;  /* first ul left, second ul right */
+    align-items: center;
 }
 
 #nav-one ul {
@@ -41,14 +46,34 @@ a:focus-visible {
 
 nav img {
     display: block;
-    height: clamp(24px, 3vw, 36px); /* min, preferred, max */
+    height: clamp(24px, 3vw, 36px);  /* min, preferred, max */
     width: auto;
+}
+
+.menu-toggle {
+    display: none;                   /* hidden on desktop */
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    padding: 0;
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: #000;
+    border-radius: 2px;
 }
 
 /* ---------- Hero section (desktop) ---------- */
 .hero-section {
     display: flex;
-    flex-direction: row;           /* text on the left, image on the right */
+    flex-direction: row;             /* text on the left, image on the right */
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
@@ -56,7 +81,7 @@ nav img {
 }
 
 .hero-text {
-    flex: 0 1 45ch;                /* don't grow, may shrink, ideal width 45ch */
+    flex: 0 1 45ch;                  /* don't grow, may shrink, ideal width 45ch */
 }
 
 .hero-text p {
@@ -68,20 +93,50 @@ nav img {
 .hero-image {
     flex: 1;
     display: flex;
-    justify-content: flex-start;   /* image sits next to the text */
+    justify-content: flex-start;     /* image sits next to the text */
 }
 
 .hero-image img {
     width: 100%;
-    max-width: 800px;              /* larger starting size */
-    min-width: 320px;              /* floor: it won't shrink below this */
+    max-width: 800px;                /* larger starting size */
+    min-width: 320px;                /* floor: it won't shrink below this */
     height: auto;
 }
 
-/* ---------- Hero section (phones) ---------- */
+/* ---------- Phones (nav + hero) ---------- */
 @media (max-width: 600px) {
+    /* Nav */
+    #nav-one {
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 1rem;
+    }
+
+    .menu-toggle {
+        display: flex;               /* show the three lines */
+    }
+
+    .nav-menu {
+        display: none;               /* closed by default */
+        flex-basis: 100%;            /* drops onto its own row below the logo */
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .nav-menu.open {
+        display: flex;               /* shown when the button is clicked */
+    }
+
+    #nav-one ul {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    /* Hero */
     .hero-section {
-        flex-direction: column;    /* text on top, image below */
+        flex-direction: column-reverse;  /* image on top, text below */
         align-items: flex-start;
         gap: 1.5rem;
         padding: 1.5rem 1rem;
@@ -102,7 +157,7 @@ nav img {
     }
 
     .hero-image img {
-        min-width: 0;              /* let it shrink so it can't overflow */
+        min-width: 0;                /* let it shrink so it can't overflow */
         max-width: 100%;
         height: auto;
     }
