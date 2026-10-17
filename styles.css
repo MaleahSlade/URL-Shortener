@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght,MONO@0,300..800,1;1,300..800,1&display=swap');
+
+body {
+    font-family: "Google Sans Code", monospace;
+    }
+
+
+h1 {
+    font-size: 32px;
+}
+
+p {
+    font: size 18px;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+a:hover,
+a:focus-visible {
+    color: #808080;
+}
+
+#nav-one {
+    display: flex;
+    justify-content: space-between; /* first ul left, second ul right */
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+#nav-one ul {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav img {
+    display: block;
+    height: clamp(24px, 3vw, 36px); /* min, preferred, max */
+    width: auto;
+}
+
+/* ---------- Hero section (desktop) ---------- */
+.hero-section {
+    display: flex;
+    flex-direction: row;           /* text on the left, image on the right */
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+.hero-text {
+    flex: 0 1 45ch;                /* don't grow, may shrink, ideal width 45ch */
+}
+
+.hero-text p {
+    max-width: 35ch;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;   /* image sits next to the text */
+}
+
+.hero-image img {
+    width: 100%;
+    max-width: 800px;              /* larger starting size */
+    min-width: 320px;              /* floor: it won't shrink below this */
+    height: auto;
+}
+
+/* ---------- Hero section (phones) ---------- */
+@media (max-width: 600px) {
+    .hero-section {
+        flex-direction: column;    /* text on top, image below */
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding: 1.5rem 1rem;
+    }
+
+    .hero-text {
+        flex: none;
+        max-width: 100%;
+    }
+
+    .hero-text p {
+        max-width: 100%;
+    }
+
+    .hero-image {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .hero-image img {
+        min-width: 0;              /* let it shrink so it can't overflow */
+        max-width: 100%;
+        height: auto;
+    }
+}
