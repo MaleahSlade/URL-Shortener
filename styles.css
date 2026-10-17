@@ -104,7 +104,7 @@ nav img {
 }
 
 /* ---------- Phones (nav + hero) ---------- */
-@media (max-width: 600px) {
+@media (max-width: 375px) {
     /* Nav */
     #nav-one {
         flex-wrap: wrap;
@@ -160,5 +160,91 @@ nav img {
         min-width: 0;                /* let it shrink so it can't overflow */
         max-width: 100%;
         height: auto;
+    }
+}
+
+#shortener-box {
+    width: fit-content;
+    margin: 2rem auto;       /* was margin: 0; top/bottom space, centered left/right */
+    padding: 1rem;
+    border: 0;
+    border-radius: 12px;
+    background: hsl(257, 27%, 26%);
+    color: #fff;
+}
+
+#shortener-box form {
+    margin: 0;
+}
+
+fieldset form {
+    margin: 0;
+}
+
+/* Shortened link results */
+#results-container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 2rem auto;
+}
+
+.result-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    background-color: #fff;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.original-link {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.shortened-link {
+    color: #2acfcf;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+.shortened-link:hover {
+    text-decoration: underline;
+}
+
+.copy-button {
+    background-color: #2acfcf;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.7rem 1.5rem;
+    font: inherit;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.copy-button:hover {
+    background-color: #238f8f;
+}
+
+.copy-button:focus-visible,
+.shortened-link:focus-visible {
+    outline: 3px solid #35323e;
+    outline-offset: 3px;
+}
+
+/* Stack the results on smaller screens */
+@media (max-width: 600px) {
+    .result-card {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .copy-button {
+        width: 100%;
     }
 }

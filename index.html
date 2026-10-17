@@ -47,5 +47,34 @@
         </div>
     </div>
 </fieldset>
+
+<fieldset id="shortener-box">
+    <form id="shortener-form" novalidate>
+
+        <label for="homepage" class="visually-hidden">
+            Enter a URL: 
+        </label>
+
+        <input
+            type="url"
+            id="homepage"
+            name="homepage"
+            placeholder="Shorten a link here..."
+            aria-describedby="url-error"
+            required
+        >
+
+        <small id="url-error" class="error-message" aria-live="polite"></small>
+
+        <button type="submit" id="shorten-button">
+            Shorten It!
+        </button>
+
+    </form>
+</fieldset>
+
+<section id="results-container" aria-label="Shortened links">
+    <!-- JavaScript will insert shortened links here -->
+</section>
 </body>
 </html>
