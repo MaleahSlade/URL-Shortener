@@ -7,75 +7,59 @@ const shortenButton = document.querySelector("#shorten-button");
 
 // Send a URL to the Shrtr API
 async function shortenURL(longURL) {
-    const endpoint = "https://shrtr.top/api/v1/shorten";
-
-    const response = await fetch(endpoint, {
+    const response = await fetch("https://shrtr.top/api/v1/shorten", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-            url: longURL
-        })
+        body: JSON.stringify({ url: longURL })
     });
+
+    // Check whether the request succeeded
+    if (response.ok === false) {
+        throw new Error("Request failed: " + response.status);
+    }
 
     // Read the API response
     const data = await response.json();
-
-    // Check whether the request succeeded
-    if (!response.ok) {
-        throw new Error(
-            data.detail ||
-            data.message ||
-            data.title ||
-            `Request failed: ${response.status}`
-        );
-    }
 
     // Check whether the API returned a shortened URL
     if (!data.short_url) {
         throw new Error("The API did not return a shortened URL.");
     }
 
-    // Return the shortened URL to the form handler
     return data.short_url;
 }
 
 // Handle form submission
-form.addEventListener("submit", async (event) => {
+form.addEventListener("submit", async function (event) {
     event.preventDefault();
 
     const longURL = urlInput.value.trim();
 
     // Check whether the input is empty
-    if (!longURL) {
+    if (longURL === "") {
         urlError.textContent = "Please add a link.";
-        urlInput.setAttribute("aria-invalid", "true");
         return;
     }
 
-    // Clear previous validation errors
+    // Clear previous error
     urlError.textContent = "";
-    urlInput.removeAttribute("aria-invalid");
+
+    // Show a loading state
+    shortenButton.disabled = true;
+    shortenButton.textContent = "Shortening...";
 
     try {
-        // Show a loading state
-        shortenButton.disabled = true;
-        shortenButton.textContent = "Shortening...";
-
         // Request the shortened URL
         const shortURL = await shortenURL(longURL);
 
-        // Retrieve existing links
+        // Get saved links, add the new one to the front, and save
         const links = getSavedLinks();
-
-        // Add the new link to the beginning of the array
         links.unshift({
             originalURL: longURL,
             shortURL: shortURL
         });
-
-        // Save the updated array
         saveLinks(links);
 
         // Refresh the result cards
@@ -83,19 +67,14 @@ form.addEventListener("submit", async (event) => {
 
         // Clear the input field
         urlInput.value = "";
-
     } catch (error) {
-        // Report errors
-        console.error("Error shortening URL:", error);
-
-        urlError.textContent =
-            error.message || "Something went wrong. Please try again.";
-
-    } finally {
-        // Restore the button
-        shortenButton.disabled = false;
-        shortenButton.textContent = "Shorten It!";
+        console.log(error);
+        urlError.textContent = "Something went wrong. Please try again.";
     }
+
+    // Restore the button
+    shortenButton.disabled = false;
+    shortenButton.textContent = "Shorten It!";
 });
 
 // Display a shortened link on the page
@@ -114,7 +93,6 @@ function displayShortenedLink(originalURL, shortURL) {
     shortenedLink.href = shortURL;
     shortenedLink.textContent = shortURL;
     shortenedLink.target = "_blank";
-    shortenedLink.rel = "noopener noreferrer";
     shortenedLink.classList.add("shortened-link");
 
     // Create a copy button
@@ -124,31 +102,27 @@ function displayShortenedLink(originalURL, shortURL) {
     copyButton.classList.add("copy-button");
 
     // Copy the shortened URL to the clipboard
-    copyButton.addEventListener("click", async () => {
-        try {
-            await navigator.clipboard.writeText(shortURL);
-            copyButton.textContent = "Copied!";
-        } catch (error) {
-            console.error("Unable to copy link:", error);
-            copyButton.textContent = "Copy failed";
-        }
+    copyButton.addEventListener("click", function () {
+        navigator.clipboard.writeText(shortURL);
+        copyButton.textContent = "Copied!";
     });
 
     // Add everything to the result card
-    resultCard.append(originalLink, shortenedLink, copyButton);
+    resultCard.appendChild(originalLink);
+    resultCard.appendChild(shortenedLink);
+    resultCard.appendChild(copyButton);
 
     // Add the result card to the results section
-    resultsContainer.append(resultCard);
+    resultsContainer.appendChild(resultCard);
 }
 
-// Retrieve saved links from localStorage
+// Get saved links from localStorage
 function getSavedLinks() {
-    try {
-        return JSON.parse(
-            localStorage.getItem("shortenedLinks") || "[]"
-        );
-    } catch (error) {
-        console.error("Unable to retrieve saved links:", error);
+    const saved = localStorage.getItem("shortenedLinks");
+
+    if (saved) {
+        return JSON.parse(saved);
+    } else {
         return [];
     }
 }
@@ -163,12 +137,12 @@ function renderLinks() {
     const links = getSavedLinks();
 
     // Clear existing result cards
-    resultsContainer.replaceChildren();
+    resultsContainer.innerHTML = "";
 
-    // Display saved links in their existing order
-    links.forEach((link) => {
-        displayShortenedLink(link.originalURL, link.shortURL);
-    });
+    // Display each saved link
+    for (let i = 0; i < links.length; i++) {
+        displayShortenedLink(links[i].originalURL, links[i].shortURL);
+    }
 }
 
 // Display saved links when the page loads
